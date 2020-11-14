@@ -71,7 +71,7 @@ namespace eosio { namespace chain {
          static const uint64_t value = 40 + overhead; ///< fixed field + overhead
       };
    }
-} } // eosio::chain
+} }
 
 CHAINBASE_SET_INDEX_TYPE(eosio::chain::permission_link_object, eosio::chain::permission_link_index)
 

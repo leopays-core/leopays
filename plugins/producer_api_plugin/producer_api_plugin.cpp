@@ -99,6 +99,8 @@ void producer_api_plugin::plugin_startup() {
             INVOKE_R_V(producer, paused), 201),
        CALL(producer, producer, get_runtime_options,
             INVOKE_R_V(producer, get_runtime_options), 201),
+       CALL(producer, producer, get_node_producers,
+            INVOKE_R_V(producer, get_node_producers), 201),
        CALL(producer, producer, update_runtime_options,
             INVOKE_V_R(producer, update_runtime_options, producer_plugin::runtime_options), 201),
        CALL(producer, producer, add_greylist_accounts,

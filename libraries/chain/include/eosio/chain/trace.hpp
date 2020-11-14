@@ -79,7 +79,7 @@ namespace eosio { namespace chain {
              auth.permission == eosio::chain::config::active_name;
    }
 
-} }  /// namespace eosio::chain
+} }
 
 FC_REFLECT( eosio::chain::account_delta,
             (account)(delta) )

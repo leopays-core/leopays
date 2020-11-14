@@ -7,7 +7,7 @@ namespace eosio { namespace chain {
       EOS_ASSERT( *reinterpret_cast<const fc::sha256*>(this) != fc::sha256(), chain_id_type_exception, "chain_id_type cannot be zero" );
    }
 
-} }  // namespace eosio::chain
+} }
 
 namespace fc {
 
@@ -19,4 +19,4 @@ namespace fc {
       from_variant( v, static_cast<fc::sha256&>(cid) );
    }
 
-} // fc
+}

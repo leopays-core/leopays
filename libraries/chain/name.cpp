@@ -32,9 +32,9 @@ namespace eosio::chain {
       return str;
    }
 
-} // eosio::chain
+}
 
 namespace fc {
   void to_variant(const eosio::chain::name& c, fc::variant& v) { v = c.to_string(); }
   void from_variant(const fc::variant& v, eosio::chain::name& check) { check.set( v.get_string() ); }
-} // fc
+}

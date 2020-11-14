@@ -38,7 +38,7 @@ parser.add_argument("--wallet_port", type=int, help="wallet port", default=8899)
 parser.add_argument("--impaired_network", help="test impaired network", action='store_true')
 parser.add_argument("--lossy_network", help="test lossy network", action='store_true')
 parser.add_argument("--stress_network", help="test load/stress network", action='store_true')
-parser.add_argument("--not_kill_wallet", help="not killing walletd", action='store_true')
+parser.add_argument("--not_kill_wallet", help="not killing leopays-wallet", action='store_true')
 
 args = parser.parse_args()
 enableMongo=False
@@ -104,10 +104,10 @@ testeraAccount.activePublicKey=currencyAccount.activePublicKey=PUB_KEY3
 exchangeAccount.ownerPrivateKey=PRV_KEY2
 exchangeAccount.ownerPublicKey=PUB_KEY2
 
-print("Stand up walletd")
+print("Stand up leopays-wallet")
 if walletMgr.launch() is False:
     cmdError("%s" % (WalletdName))
-    errorExit("Failed to stand up eos walletd.")
+    errorExit("Failed to stand up leopays-wallet.")
 
 testWalletName="test"
 Print("Creating wallet \"%s\"." % (testWalletName))
@@ -116,7 +116,7 @@ testWallet=walletMgr.create(testWalletName)
 for account in accounts:
     Print("Importing keys for account %s into wallet %s." % (account.name, testWallet.name))
     if not walletMgr.importKey(account, testWallet):
-        cmdError("%s wallet import" % (ClientName))
+        cmdError("%s wallet import" % (CliName))
         errorExit("Failed to import key for account %s" % (account.name))
 
 defproduceraWalletName="defproducera"
@@ -128,29 +128,29 @@ defproduceraAccount=testUtils.Cluster.defproduceraAccount
 
 Print("Importing keys for account %s into wallet %s." % (defproduceraAccount.name, defproduceraWallet.name))
 if not walletMgr.importKey(defproduceraAccount, defproduceraWallet):
-     cmdError("%s wallet import" % (ClientName))
+     cmdError("%s wallet import" % (CliName))
      errorExit("Failed to import key for account %s" % (defproduceraAccount.name))
 
 node0=cluster.getNode(0)
 
-# eosio should have the same key as defproducera
+# lpc should have the same key as defproducera
 eosio = copy.copy(defproduceraAccount)
-eosio.name = "eosio"
+eosio.name = "lpc"
 
 Print("Info of each node:")
 for i in range(len(hosts)):
     node = node0
-    cmd="%s %s get info" % (testUtils.Utils.EosClientPath, node.endpointArgs)
+    cmd="%s %s get info" % (testUtils.Utils.CliPath, node.endpointArgs)
     trans = node.runCmdReturnJson(cmd)
     Print("host %s: %s" % (hosts[i], trans))
 
 
-wasmFile="eosio.system.wasm"
-abiFile="eosio.system.abi"
+wasmFile="lpc.system.wasm"
+abiFile="lpc.system.abi"
 Print("\nPush system contract %s %s" % (wasmFile, abiFile))
 trans=node0.publishContract(eosio.name, wasmFile, abiFile, waitForTransBlock=True)
 if trans is None:
-    Utils.errorExit("Failed to publish eosio.system.")
+    Utils.errorExit("Failed to publish lpc.system.")
 else:
     Print("transaction id %s" % (node0.getTransId(trans)))
 

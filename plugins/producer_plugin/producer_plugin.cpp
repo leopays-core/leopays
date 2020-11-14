@@ -649,7 +649,7 @@ void new_chain_banner(const eosio::chain::controller& db)
       "*******************************\n"
       "*                             *\n"
       "*   ------ NEW CHAIN ------   *\n"
-      "*   -  Welcome to EOSIO!  -   *\n"
+      "*   - Welcome to LeoPays! -   *\n"
       "*   -----------------------   *\n"
       "*                             *\n"
       "*******************************\n"
@@ -689,20 +689,20 @@ void producer_plugin::set_program_options(
           "Limits the maximum age (in seconds) of the DPOS Irreversible Block for a chain this node will produce blocks on (use negative value to indicate unlimited)")
          ("producer-name,p", boost::program_options::value<vector<string>>()->composing()->multitoken(),
           "ID of producer controlled by this node (e.g. inita; may specify multiple times)")
-         ("private-key", boost::program_options::value<vector<string>>()->composing()->multitoken(),
-          "(DEPRECATED - Use signature-provider instead) Tuple of [public key, WIF private key] (may specify multiple times)")
+         /*("private-key", boost::program_options::value<vector<string>>()->composing()->multitoken(),
+          "(DEPRECATED - Use signature-provider instead) Tuple of [public key, WIF private key] (may specify multiple times)")*/
          ("signature-provider", boost::program_options::value<vector<string>>()->composing()->multitoken()->default_value(
                {default_priv_key.get_public_key().to_string() + "=KEY:" + default_priv_key.to_string()},
                 default_priv_key.get_public_key().to_string() + "=KEY:" + default_priv_key.to_string()),
           "Key=Value pairs in the form <public-key>=<provider-spec>\n"
           "Where:\n"
-          "   <public-key>    \tis a string form of a vaild EOSIO public key\n\n"
+          "   <public-key>    \tis a string form of a vaild LeoPays public key\n\n"
           "   <provider-spec> \tis a string in the form <provider-type>:<data>\n\n"
-          "   <provider-type> \tis KEY, or KEOSD\n\n"
-          "   KEY:<data>      \tis a string form of a valid EOSIO private key which maps to the provided public key\n\n"
-          "   KEOSD:<data>    \tis the URL where keosd is available and the approptiate wallet(s) are unlocked")
-         ("keosd-provider-timeout", boost::program_options::value<int32_t>()->default_value(5),
-          "Limits the maximum time (in milliseconds) that is allowed for sending blocks to a keosd provider for signing")
+          "   <provider-type> \tis KEY, or WALLET\n\n"
+          "   KEY:<data>      \tis a string form of a valid LeoPays private key which maps to the provided public key\n\n"
+          "   WALLET:<data>    \tis the URL where leopays-wallet is available and the approptiate wallet(s) are unlocked")
+         ("wallet-provider-timeout", boost::program_options::value<int32_t>()->default_value(5),
+          "Limits the maximum time (in milliseconds) that is allowed for sending blocks to a leopays-wallet provider for signing")
          ("greylist-account", boost::program_options::value<vector<string>>()->composing()->multitoken(),
           "account that can not access to extended CPU/NET virtual resources")
          ("greylist-limit", boost::program_options::value<uint32_t>()->default_value(1000),
@@ -814,12 +814,13 @@ void producer_plugin::plugin_initialize(const boost::program_options::variables_
             unapplied_transaction_queue::process_mode::speculative_producer;
    my->_unapplied_transactions.set_mode( unapplied_mode );
 
-   if( options.count("private-key") )
+   /*if( options.count("private-key") )
    {
       const std::vector<std::string> key_id_to_wif_pair_strings = options["private-key"].as<std::vector<std::string>>();
       for (const std::string& key_id_to_wif_pair_string : key_id_to_wif_pair_strings)
       {
          try {
+            EOS_ASSERT( my->_signature_providers > 1, "Maximum private keys or signature providers = 1");
             auto key_id_to_wif_pair = dejsonify<std::pair<public_key_type, private_key_type>>(key_id_to_wif_pair_string);
             my->_signature_providers[key_id_to_wif_pair.first] = make_key_signature_provider(key_id_to_wif_pair.second);
             auto blanked_privkey = std::string(key_id_to_wif_pair.second.to_string().size(), '*' );
@@ -828,7 +829,7 @@ void producer_plugin::plugin_initialize(const boost::program_options::variables_
             elog("Malformed private key pair");
          }
       }
-   }
+   }*/
 
    if( options.count("signature-provider") ) {
       const std::vector<std::string> key_spec_pairs = options["signature-provider"].as<std::vector<std::string>>();
@@ -848,7 +849,7 @@ void producer_plugin::plugin_initialize(const boost::program_options::variables_
 
             if (spec_type_str == "KEY") {
                my->_signature_providers[pubkey] = make_key_signature_provider(private_key_type(spec_data));
-            } else if (spec_type_str == "KEOSD") {
+            } else if (spec_type_str == "WALLET") {
                my->_signature_providers[pubkey] = make_keosd_signature_provider(my, spec_data, pubkey);
             }
 
@@ -858,7 +859,7 @@ void producer_plugin::plugin_initialize(const boost::program_options::variables_
       }
    }
 
-   my->_keosd_provider_timeout_us = fc::milliseconds(options.at("keosd-provider-timeout").as<int32_t>());
+   my->_keosd_provider_timeout_us = fc::milliseconds(options.at("wallet-provider-timeout").as<int32_t>());
 
    my->_produce_time_offset_us = options.at("produce-time-offset-us").as<int32_t>();
    EOS_ASSERT( my->_produce_time_offset_us <= 0 && my->_produce_time_offset_us >= -config::block_interval_us, plugin_config_exception,
@@ -978,6 +979,7 @@ void producer_plugin::plugin_startup()
    ilog("producer plugin:  plugin_startup() begin");
 
    chain::controller& chain = my->chain_plug->chain();
+   EOS_ASSERT( my->_producers.size() <= 1, plugin_config_exception, "The maximum number of producers is 1" );
    EOS_ASSERT( my->_producers.empty() || chain.get_read_mode() == chain::db_read_mode::SPECULATIVE, plugin_config_exception,
               "node cannot have any producer-name configured because block production is impossible when read_mode is not \"speculative\"" );
 
@@ -1119,6 +1121,16 @@ producer_plugin::runtime_options producer_plugin::get_runtime_options() const {
       my->_incoming_defer_ratio,
       my->chain_plug->chain().get_greylist_limit()
    };
+}
+
+producer_plugin::producerslist_params producer_plugin::get_node_producers() const {
+   producerslist_params result;
+   const auto& list = my->_producers;
+   result.accounts.reserve(list.size());
+   for (auto &acc: list) {
+      result.accounts.push_back(acc);
+   }
+   return result;
 }
 
 void producer_plugin::add_greylist_accounts(const greylist_params& params) {
@@ -2140,4 +2152,4 @@ void producer_plugin::log_failed_transaction(const transaction_id_type& trx_id, 
            ("trxid", trx_id)("reason", reason));
 }
 
-} // namespace eosio
+}

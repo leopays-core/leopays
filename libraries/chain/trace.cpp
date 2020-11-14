@@ -34,4 +34,4 @@ action_trace::action_trace(
 ,producer_block_id( trace.producer_block_id )
 {}
 
-} } // eosio::chain
+} }

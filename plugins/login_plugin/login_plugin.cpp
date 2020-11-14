@@ -157,4 +157,4 @@ login_plugin::do_not_use_get_secret(const login_plugin::do_not_use_get_secret_pa
    return {params.priv_key.generate_shared_secret(params.pub_key)};
 }
 
-} // namespace eosio
+}

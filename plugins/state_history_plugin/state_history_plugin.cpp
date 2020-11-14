@@ -659,4 +659,4 @@ void state_history_plugin::plugin_shutdown() {
    my->stopping = true;
 }
 
-} // namespace eosio
+}

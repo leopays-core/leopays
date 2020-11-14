@@ -13,7 +13,7 @@ namespace eosio {
          When encoded as a uint64_t, first byte represents the number of decimals, remaining bytes
          represent token name.
          Name must only include upper case alphabets.
-         from_string constructs a symbol from an input a string of the form "4,EOS"
+         from_string constructs a symbol from an input a string of the form "4,LPC"
          where the integer represents number of decimals. Number of decimals must be larger than zero.
        */
 
@@ -165,8 +165,8 @@ namespace eosio {
          return lhs.value() > rhs.value();
       }
 
-   } // namespace chain
-} // namespace eosio
+   }
+}
 
 namespace fc {
    inline void to_variant(const eosio::chain::symbol& var, fc::variant& vo) { vo = var.to_string(); }

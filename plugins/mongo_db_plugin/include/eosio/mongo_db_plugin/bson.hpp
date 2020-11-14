@@ -22,7 +22,7 @@ void from_bson(const bsoncxx::document::view& view, fc::mutable_variant_object& 
 void from_bson(const bsoncxx::array::view& bson_array, fc::variants& a);
 template <typename T> void from_bson(const T& ele, fc::variant& v);
 fc::variant from_bson(const bsoncxx::document::view& view);
-} // namespace eosio
+}
 
 namespace eosio {
 
@@ -242,5 +242,5 @@ fc::variant from_bson(const bsoncxx::document::view& view)
    return o;
 }
 
-}   // namespace eosio
+}
 

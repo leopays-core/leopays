@@ -1,6 +1,6 @@
-if( EOSIO_COMPILE_TEST_CONTRACTS )
-   set(EOSIO_WASM_OLD_BEHAVIOR "Off")
-   find_package( eosio.cdt REQUIRED )
+if( LEOPAYS_COMPILE_TEST_CONTRACTS )
+   set(LEOPAYS_WASM_OLD_BEHAVIOR "Off")
+   find_package( leopays.cdt REQUIRED )
 endif()
 
 if ("${CMAKE_GENERATOR}" STREQUAL "Ninja")

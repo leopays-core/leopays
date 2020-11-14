@@ -297,7 +297,7 @@ inline bool validate( const Authority& auth ) {
    return total_weight >= auth.threshold;
 }
 
-} } // namespace eosio::chain
+} }
 
 
 FC_REFLECT(eosio::chain::permission_level_weight, (permission)(weight) )

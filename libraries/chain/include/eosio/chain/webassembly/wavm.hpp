@@ -152,4 +152,4 @@ struct wasm_function_type_provider<Ret(Args...)> {
       nullptr\
    );
 
-} } } }// eosio::chain::webassembly::wavm
+} } } }

@@ -320,7 +320,7 @@ namespace eosio { namespace chain {
       return true;
    }
 
-} } /// eosio::chain
+} }
 
 FC_REFLECT( eosio::chain::legacy::producer_key, (producer_name)(block_signing_key) )
 FC_REFLECT( eosio::chain::legacy::producer_schedule_type, (version)(producers) )

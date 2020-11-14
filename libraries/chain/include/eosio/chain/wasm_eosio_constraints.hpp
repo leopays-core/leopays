@@ -25,6 +25,6 @@ namespace eosio { namespace chain { namespace wasm_constraints {
    static_assert(maximum_linear_memory_init%wasm_page_size == 0, "maximum_linear_memory_init must be mulitple of wasm page size");
    static_assert(maximum_func_local_bytes%8                == 0, "maximum_func_local_bytes must be mulitple of 8");
    static_assert(maximum_func_local_bytes>32                   , "maximum_func_local_bytes must be greater than 32");
-} // namespace  wasm_constraints
+}
 
-}} // namespace eosio, chain
+}}

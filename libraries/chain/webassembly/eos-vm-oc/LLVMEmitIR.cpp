@@ -1,5 +1,5 @@
 /*
-The EOS VM Optimized Compiler was created in part based on WAVM
+The LeoPays VM Optimized Compiler was created in part based on WAVM
 https://github.com/WebAssembly/wasm-jit-prototype
 subject the following:
 

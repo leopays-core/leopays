@@ -25,17 +25,17 @@ struct core_sym {
 namespace eosio {
    namespace testing {
       struct contracts {
-         // Contracts in `eos/unittests/contracts' directory
-         MAKE_READ_WASM_ABI(eosio_bios,   eosio.bios, contracts)
-         MAKE_READ_WASM_ABI(eosio_msig,   eosio.msig, contracts)
-         MAKE_READ_WASM_ABI(eosio_system, eosio.system, contracts)
-         MAKE_READ_WASM_ABI(eosio_token,  eosio.token,  contracts)
-         MAKE_READ_WASM_ABI(eosio_wrap,   eosio.wrap,   contracts)
+         // Contracts in `leopays/unittests/contracts' directory
+         MAKE_READ_WASM_ABI(eosio_bios,   lpc.bios, contracts)
+         MAKE_READ_WASM_ABI(eosio_msig,   lpc.msig, contracts)
+         MAKE_READ_WASM_ABI(eosio_system, lpc.system, contracts)
+         MAKE_READ_WASM_ABI(eosio_token,  lpc.token,  contracts)
+         MAKE_READ_WASM_ABI(eosio_wrap,   lpc.wrap,   contracts)
 
-         MAKE_READ_WASM_ABI(before_producer_authority_eosio_bios,   eosio.bios, contracts/old_versions/v1.7.0-develop-preactivate_feature)
-         MAKE_READ_WASM_ABI(before_preactivate_eosio_bios,          eosio.bios, contracts/old_versions/v1.6.0-rc3)
+         MAKE_READ_WASM_ABI(before_producer_authority_eosio_bios,   lpc.bios, contracts/old_versions/v1.7.0-develop-preactivate_feature)
+         MAKE_READ_WASM_ABI(before_preactivate_eosio_bios,          lpc.bios, contracts/old_versions/v1.6.0-rc3)
 
-         // Contracts in `eos/unittests/unittests/test-contracts' directory
+         // Contracts in `leopays/unittests/unittests/test-contracts' directory
          MAKE_READ_WASM_ABI(asserter,              asserter,              test-contracts)
          MAKE_READ_WASM_ABI(deferred_test,         deferred_test,         test-contracts)
          MAKE_READ_WASM_ABI(get_sender_test,       get_sender_test,       test-contracts)
@@ -52,5 +52,5 @@ namespace eosio {
          MAKE_READ_WASM_ABI(test_api_multi_index,  test_api_multi_index,  test-contracts)
          MAKE_READ_WASM_ABI(test_ram_limit,        test_ram_limit,        test-contracts)
       };
-   } /// eosio::testing
-}  /// eosio
+   }
+}

@@ -358,4 +358,4 @@ namespace eosio { namespace chain {
 
    };
 
-} }  /// eosio::chain
+} }

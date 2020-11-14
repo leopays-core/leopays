@@ -64,4 +64,4 @@ void wallet_plugin::plugin_initialize(const variables_map& options) {
    } FC_LOG_AND_RETHROW()
 }
 
-} // namespace eosio
+}

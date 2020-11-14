@@ -706,15 +706,15 @@ BOOST_AUTO_TEST_CASE( fix_linkauth_restriction ) { try {
                ("type", type)
                ("requirement", "first")),
          action_validate_exception,
-         fc_exception_message_is(std::string("Cannot link eosio::") + std::string(type) + std::string(" to a minimum permission"))
+         fc_exception_message_is(std::string("Cannot link lpc::") + std::string(type) + std::string(" to a minimum permission"))
       );
    };
 
-   validate_disallow("eosio", "linkauth");
-   validate_disallow("eosio", "unlinkauth");
-   validate_disallow("eosio", "deleteauth");
-   validate_disallow("eosio", "updateauth");
-   validate_disallow("eosio", "canceldelay");
+   validate_disallow("lpc", "linkauth");
+   validate_disallow("lpc", "unlinkauth");
+   validate_disallow("lpc", "deleteauth");
+   validate_disallow("lpc", "updateauth");
+   validate_disallow("lpc", "canceldelay");
 
    validate_disallow("currency", "linkauth");
    validate_disallow("currency", "unlinkauth");
@@ -737,11 +737,11 @@ BOOST_AUTO_TEST_CASE( fix_linkauth_restriction ) { try {
             ("requirement", "first"));
    };
 
-   validate_disallow("eosio", "linkauth");
-   validate_disallow("eosio", "unlinkauth");
-   validate_disallow("eosio", "deleteauth");
-   validate_disallow("eosio", "updateauth");
-   validate_disallow("eosio", "canceldelay");
+   validate_disallow("lpc", "linkauth");
+   validate_disallow("lpc", "unlinkauth");
+   validate_disallow("lpc", "deleteauth");
+   validate_disallow("lpc", "updateauth");
+   validate_disallow("lpc", "canceldelay");
 
    validate_allowed("currency", "linkauth");
    validate_allowed("currency", "unlinkauth");
@@ -953,15 +953,15 @@ BOOST_AUTO_TEST_CASE( forward_setcode_test ) { try {
    c.create_accounts( {tester1_account, tester2_account} );
 
    // Deploy contract that rejects all actions dispatched to it with the following exceptions:
-   //   * eosio::setcode to set code on the eosio is allowed (unless the rejectall account exists)
-   //   * eosio::newaccount is allowed only if it creates the rejectall account.
+   //   * lpc::setcode to set code on the lpc is allowed (unless the rejectall account exists)
+   //   * lpc::newaccount is allowed only if it creates the rejectall account.
    c.set_code( config::system_account_name, contracts::reject_all_wasm() );
    c.produce_block();
 
-   // Before activation, deploying a contract should work since setcode won't be forwarded to the WASM on eosio.
+   // Before activation, deploying a contract should work since setcode won't be forwarded to the WASM on lpc.
    c.set_code( tester1_account, contracts::noop_wasm() );
 
-   // Activate FORWARD_SETCODE protocol feature and then return contract on eosio back to what it was.
+   // Activate FORWARD_SETCODE protocol feature and then return contract on lpc back to what it was.
    const auto& pfm = c.control->get_protocol_feature_manager();
    const auto& d = pfm.get_builtin_digest( builtin_protocol_feature_t::forward_setcode );
    BOOST_REQUIRE( d );
@@ -971,7 +971,7 @@ BOOST_AUTO_TEST_CASE( forward_setcode_test ) { try {
    c.set_code( config::system_account_name, contracts::reject_all_wasm() );
    c.produce_block();
 
-   // After activation, deploying a contract causes setcode to be dispatched to the WASM on eosio,
+   // After activation, deploying a contract causes setcode to be dispatched to the WASM on lpc,
    // and in this case the contract is configured to reject the setcode action.
    BOOST_REQUIRE_EXCEPTION( c.set_code( tester2_account, contracts::noop_wasm() ),
                             eosio_assert_message_exception,
@@ -986,7 +986,7 @@ BOOST_AUTO_TEST_CASE( forward_setcode_test ) { try {
    c.produce_block();
    // The existence of the rejectall account will make the reject_all contract reject all actions with no exception.
 
-   // It will now not be possible to deploy the reject_all contract to the eosio account,
+   // It will now not be possible to deploy the reject_all contract to the lpc account,
    // because after it is set by the native function, it is called immediately after which will reject the transaction.
    BOOST_REQUIRE_EXCEPTION( c.set_code( config::system_account_name, contracts::reject_all_wasm() ),
                             eosio_assert_message_exception,
@@ -994,12 +994,12 @@ BOOST_AUTO_TEST_CASE( forward_setcode_test ) { try {
 
 
    // Going back to the backup chain, we can create the rejectall account while the reject_all contract is
-   // already deployed on eosio.
+   // already deployed on lpc.
    c2.create_account( N(rejectall) );
    c2.produce_block();
-   // Now all actions dispatched to the eosio account should be rejected.
+   // Now all actions dispatched to the lpc account should be rejected.
 
-   // However, it should still be possible to set the bios contract because the WASM on eosio is called after the
+   // However, it should still be possible to set the bios contract because the WASM on lpc is called after the
    // native setcode function completes.
    c2.set_before_producer_authority_bios_contract();
    c2.produce_block();
@@ -1593,7 +1593,7 @@ BOOST_AUTO_TEST_CASE( producer_schedule_change_extension_test ) { try {
       // re-sign the bad block
       auto header_bmroot = digest_type::hash( std::make_pair( bad_block->digest(), remote.control->head_block_state()->blockroot_merkle ) );
       auto sig_digest = digest_type::hash( std::make_pair(header_bmroot, remote.control->head_block_state()->pending_schedule.schedule_hash) );
-      bad_block->producer_signature = remote.get_private_key(N(eosio), "active").sign(sig_digest);
+      bad_block->producer_signature = remote.get_private_key(N(lpc), "active").sign(sig_digest);
 
       // ensure it is rejected as an unknown extension
       BOOST_REQUIRE_EXCEPTION(
@@ -1612,7 +1612,7 @@ BOOST_AUTO_TEST_CASE( producer_schedule_change_extension_test ) { try {
       // re-sign the bad block
       auto header_bmroot = digest_type::hash( std::make_pair( bad_block->digest(), remote.control->head_block_state()->blockroot_merkle ) );
       auto sig_digest = digest_type::hash( std::make_pair(header_bmroot, remote.control->head_block_state()->pending_schedule.schedule_hash) );
-      bad_block->producer_signature = remote.get_private_key(N(eosio), "active").sign(sig_digest);
+      bad_block->producer_signature = remote.get_private_key(N(lpc), "active").sign(sig_digest);
 
       // ensure it is accepted (but rejected because it doesn't match expected state)
       BOOST_REQUIRE_EXCEPTION(
@@ -1640,7 +1640,7 @@ BOOST_AUTO_TEST_CASE( producer_schedule_change_extension_test ) { try {
       // re-sign the bad block
       auto header_bmroot = digest_type::hash( std::make_pair( bad_block->digest(), remote.control->head_block_state()->blockroot_merkle ) );
       auto sig_digest = digest_type::hash( std::make_pair(header_bmroot, remote.control->head_block_state()->pending_schedule.schedule_hash) );
-      bad_block->producer_signature = remote.get_private_key(N(eosio), "active").sign(sig_digest);
+      bad_block->producer_signature = remote.get_private_key(N(lpc), "active").sign(sig_digest);
 
       // ensure it is rejected because it doesn't match expected state (but the extention was accepted)
       BOOST_REQUIRE_EXCEPTION(
@@ -1659,7 +1659,7 @@ BOOST_AUTO_TEST_CASE( producer_schedule_change_extension_test ) { try {
       // re-sign the bad block
       auto header_bmroot = digest_type::hash( std::make_pair( bad_block->digest(), remote.control->head_block_state()->blockroot_merkle ) );
       auto sig_digest = digest_type::hash( std::make_pair(header_bmroot, remote.control->head_block_state()->pending_schedule.schedule_hash) );
-      bad_block->producer_signature = remote.get_private_key(N(eosio), "active").sign(sig_digest);
+      bad_block->producer_signature = remote.get_private_key(N(lpc), "active").sign(sig_digest);
 
       // ensure it is rejected because the new_producers field is not null
       BOOST_REQUIRE_EXCEPTION(
@@ -1683,7 +1683,7 @@ BOOST_AUTO_TEST_CASE( wtmsig_block_signing_inflight_legacy_test ) { try {
 
    // activate the feature, and start an in-flight producer schedule change with the legacy format
    c.preactivate_protocol_features( {*d} );
-   vector<legacy::producer_key> sched = {{N(eosio), c.get_public_key(N(eosio), "bsk")}};
+   vector<legacy::producer_key> sched = {{N(lpc), c.get_public_key(N(lpc), "bsk")}};
    c.push_action(config::system_account_name, N(setprods), config::system_account_name, fc::mutable_variant_object()("schedule", sched));
    c.produce_block();
 
@@ -1698,7 +1698,7 @@ BOOST_AUTO_TEST_CASE( wtmsig_block_signing_inflight_legacy_test ) { try {
    BOOST_REQUIRE_EXCEPTION( c.produce_block(), no_block_signatures, fc_exception_message_is( "Signer returned no signatures" ));
    c.control->abort_block();
 
-   c.block_signing_private_keys.emplace(get_public_key(N(eosio), "bsk"), get_private_key(N(eosio), "bsk"));
+   c.block_signing_private_keys.emplace(get_public_key(N(lpc), "bsk"), get_private_key(N(lpc), "bsk"));
    c.produce_block();
 
 } FC_LOG_AND_RETHROW() }
@@ -1717,7 +1717,7 @@ BOOST_AUTO_TEST_CASE( wtmsig_block_signing_inflight_extension_test ) { try {
    c.produce_block();
 
    // start an in-flight producer schedule change before the activation is availble to header only validators
-   vector<legacy::producer_key> sched = {{N(eosio), c.get_public_key(N(eosio), "bsk")}};
+   vector<legacy::producer_key> sched = {{N(lpc), c.get_public_key(N(lpc), "bsk")}};
    c.push_action(config::system_account_name, N(setprods), config::system_account_name, fc::mutable_variant_object()("schedule", sched));
    c.produce_block();
 
@@ -1734,7 +1734,7 @@ BOOST_AUTO_TEST_CASE( wtmsig_block_signing_inflight_extension_test ) { try {
    BOOST_REQUIRE_EXCEPTION( c.produce_block(), no_block_signatures, fc_exception_message_is( "Signer returned no signatures" ));
    c.control->abort_block();
 
-   c.block_signing_private_keys.emplace(get_public_key(N(eosio), "bsk"), get_private_key(N(eosio), "bsk"));
+   c.block_signing_private_keys.emplace(get_public_key(N(lpc), "bsk"), get_private_key(N(lpc), "bsk"));
    c.produce_block();
 
 } FC_LOG_AND_RETHROW() }

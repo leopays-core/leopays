@@ -796,4 +796,4 @@ struct intrinsic_function_invoker_wrapper<is_injected, WasmSig, Ret (Cls::*)(Par
    );\
 
 
-} } } }// eosio::chain::webassembly::eosvmoc
+} } } }

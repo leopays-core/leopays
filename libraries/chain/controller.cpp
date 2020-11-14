@@ -337,20 +337,20 @@ struct controller_impl {
    set_apply_handler( account_name(#receiver), account_name(#contract), action_name(#action), \
                       &BOOST_PP_CAT(apply_, BOOST_PP_CAT(contract, BOOST_PP_CAT(_,action) ) ) )
 
-   SET_APP_HANDLER( eosio, eosio, newaccount );
-   SET_APP_HANDLER( eosio, eosio, setcode );
-   SET_APP_HANDLER( eosio, eosio, setabi );
-   SET_APP_HANDLER( eosio, eosio, updateauth );
-   SET_APP_HANDLER( eosio, eosio, deleteauth );
-   SET_APP_HANDLER( eosio, eosio, linkauth );
-   SET_APP_HANDLER( eosio, eosio, unlinkauth );
+   SET_APP_HANDLER( lpc, lpc, newaccount );
+   SET_APP_HANDLER( lpc, lpc, setcode );
+   SET_APP_HANDLER( lpc, lpc, setabi );
+   SET_APP_HANDLER( lpc, lpc, updateauth );
+   SET_APP_HANDLER( lpc, lpc, deleteauth );
+   SET_APP_HANDLER( lpc, lpc, linkauth );
+   SET_APP_HANDLER( lpc, lpc, unlinkauth );
 /*
-   SET_APP_HANDLER( eosio, eosio, postrecovery );
-   SET_APP_HANDLER( eosio, eosio, passrecovery );
-   SET_APP_HANDLER( eosio, eosio, vetorecovery );
+   SET_APP_HANDLER( lpc, lpc, postrecovery );
+   SET_APP_HANDLER( lpc, lpc, passrecovery );
+   SET_APP_HANDLER( lpc, lpc, vetorecovery );
 */
 
-   SET_APP_HANDLER( eosio, eosio, canceldelay );
+   SET_APP_HANDLER( lpc, lpc, canceldelay );
    }
 
    /**
@@ -448,8 +448,8 @@ struct controller_impl {
     */
    void initialize_blockchain_state(const genesis_state& genesis) {
       wlog( "Initializing new blockchain with genesis state" );
-      producer_authority_schedule initial_schedule = { 0, { producer_authority{config::system_account_name, block_signing_authority_v0{ 1, {{genesis.initial_key, 1}} } } } };
-      legacy::producer_schedule_type initial_legacy_schedule{ 0, {{config::system_account_name, genesis.initial_key}} };
+      producer_authority_schedule initial_schedule = { 0, { producer_authority{config::producer_account_name, block_signing_authority_v0{ 1, {{genesis.initial_key, 1}} } } } };
+      legacy::producer_schedule_type initial_legacy_schedule{ 0, {{config::producer_account_name, genesis.initial_key}} };
 
       block_header_state genheader;
       genheader.active_schedule                = initial_schedule;
@@ -999,11 +999,10 @@ struct controller_impl {
    void create_native_account( const fc::time_point& initial_timestamp, account_name name, const authority& owner, const authority& active, bool is_privileged = false ) {
       db.create<account_object>([&](auto& a) {
          a.name = name;
+         a.creator_name = config::null_account_name;
          a.creation_date = initial_timestamp;
 
          if( name == config::system_account_name ) {
-            // The initial eosio ABI value affects consensus; see  https://github.com/EOSIO/eos/issues/7794
-            // TODO: This doesn't charge RAM; a fix requires a consensus upgrade.
             a.abi.resize(sizeof(eosio_abi_bin));
             memcpy(a.abi.data(), eosio_abi_bin, sizeof(eosio_abi_bin));
          }
@@ -1064,10 +1063,12 @@ struct controller_impl {
 
       authority system_auth(genesis.initial_key);
       create_native_account( genesis.initial_timestamp, config::system_account_name, system_auth, system_auth, true );
+      create_native_account( genesis.initial_timestamp, config::producer_account_name, system_auth, system_auth, true );
 
       auto empty_authority = authority(1, {}, {});
       auto active_producers_authority = authority(1, {}, {});
       active_producers_authority.accounts.push_back({{config::system_account_name, config::active_name}, 1});
+      active_producers_authority.accounts.push_back({{config::producer_account_name, config::active_name}, 1});
 
       create_native_account( genesis.initial_timestamp, config::null_account_name, empty_authority, empty_authority );
       create_native_account( genesis.initial_timestamp, config::producers_account_name, empty_authority, active_producers_authority );
@@ -2530,7 +2531,7 @@ void controller::preactivate_feature( const digest_type& feature_digest ) {
    // But it is still possible for a producer to retire a deferred transaction that deals with this subjective
    // information. If they recognized the feature, they would retire it successfully, but a validator that
    // does not recognize the feature should reject the entire block (not just fail the deferred transaction).
-   // Even if they don't recognize the feature, the producer could change their nodeos code to treat it like an
+   // Even if they don't recognize the feature, the producer could change their leopays-node code to treat it like an
    // objective failure thus leading the deferred transaction to retire with soft_fail or hard_fail.
    // In this case, validators that don't recognize the feature would reject the whole block immediately, and
    // validators that do recognize the feature would likely lead to a different retire status which would
@@ -3366,4 +3367,4 @@ void controller_impl::on_activation<builtin_protocol_feature_t::wtmsig_block_sig
 
 /// End of protocol feature activation handlers
 
-} } /// eosio::chain
+} }

@@ -88,7 +88,7 @@ namespace eosio::chain {
 
 #define N(X) eosio::chain::string_to_name(#X)
 
-} // eosio::chain
+}
 
 namespace std {
    template<> struct hash<eosio::chain::name> : private hash<uint64_t> {

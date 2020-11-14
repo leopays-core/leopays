@@ -1184,4 +1184,4 @@ namespace eosio { namespace chain {
       return block_n_pos;
    }
 
-   } } /// eosio::chain
+   } }

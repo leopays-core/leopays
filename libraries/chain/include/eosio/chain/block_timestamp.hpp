@@ -75,7 +75,7 @@ namespace eosio { namespace chain {
 
    typedef block_timestamp<config::block_interval_ms,config::block_timestamp_epoch> block_timestamp_type; 
 
-} } /// eosio::chain
+} }
 
 
 #include <fc/reflect/reflect.hpp>

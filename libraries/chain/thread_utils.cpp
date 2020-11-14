@@ -33,4 +33,4 @@ void named_thread_pool::stop() {
 }
 
 
-} } // eosio::chain
+} }

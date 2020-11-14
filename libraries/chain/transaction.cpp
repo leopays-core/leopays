@@ -383,4 +383,4 @@ void packed_transaction::local_pack_context_free_data()
 }
 
 
-} } // eosio::chain
+} }

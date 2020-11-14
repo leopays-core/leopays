@@ -137,4 +137,4 @@ read_write::kill_node_on_producer_results read_write::kill_node_on_producer(cons
 
 } // namespace test_control_apis
 
-} // namespace eosio
+}

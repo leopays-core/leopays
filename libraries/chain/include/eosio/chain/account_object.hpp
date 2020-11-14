@@ -14,6 +14,7 @@ namespace eosio { namespace chain {
 
       id_type              id;
       account_name         name; //< name should not be changed within a chainbase modifier lambda
+      account_name         creator_name = N(lpc.null);
       block_timestamp_type creation_date;
       shared_blob          abi;
 
@@ -97,7 +98,7 @@ namespace eosio { namespace chain {
       >
    >;
 
-} } // eosio::chain
+} }
 
 CHAINBASE_SET_INDEX_TYPE(eosio::chain::account_object, eosio::chain::account_index)
 CHAINBASE_SET_INDEX_TYPE(eosio::chain::account_metadata_object, eosio::chain::account_metadata_index)

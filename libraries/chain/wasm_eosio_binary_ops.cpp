@@ -68,4 +68,4 @@ inline std::vector<U8> pack( branchtabletype field ) {
 
           };
 }
-}}} // namespace eosio, chain, wasm_ops
+}}}

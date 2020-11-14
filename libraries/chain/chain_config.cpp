@@ -38,4 +38,4 @@ namespace eosio { namespace chain {
                   "max authority depth should be at least 1" );
 }
 
-} } // namespace eosio::chain
+} }

@@ -19,4 +19,4 @@ namespace eosio { namespace chain {
 
    std::set<std::string> convert_intrinsic_whitelist_to_set( const whitelisted_intrinsics_type& whitelisted_intrinsics );
 
-} } // namespace eosio::chain
+} }

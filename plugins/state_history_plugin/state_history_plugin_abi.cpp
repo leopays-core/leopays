@@ -1,5 +1,5 @@
 extern const char* const state_history_plugin_abi = R"({
-    "version": "eosio::abi/1.1",
+    "version": "leopays::abi/1.1",
     "structs": [
         {
             "name": "get_status_request_v0", "fields": []
@@ -211,6 +211,7 @@ extern const char* const state_history_plugin_abi = R"({
         {
             "name": "account_v0", "fields": [
                 { "type": "name", "name": "name" },
+                { "type": "name", "name": "creator_name" },
                 { "type": "block_timestamp_type", "name": "creation_date" },
                 { "type": "bytes", "name": "abi" }
             ]

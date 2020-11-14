@@ -110,7 +110,7 @@ namespace eosio { namespace chain {
       signature_type  sig;
    };
 
-} } /// eosio::chain
+} }
 
 FC_REFLECT_ENUM( eosio::chain::transaction_receipt::status_enum,
                  (executed)(soft_fail)(hard_fail)(delayed)(expired) )

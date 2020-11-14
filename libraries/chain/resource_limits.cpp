@@ -468,4 +468,4 @@ std::pair<account_resource_limit, bool> resource_limits_manager::get_account_net
    return {arl, greylisted};
 }
 
-} } } /// eosio::chain::resource_limits
+} } }

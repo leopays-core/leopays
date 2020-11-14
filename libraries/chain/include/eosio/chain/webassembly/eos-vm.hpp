@@ -8,10 +8,10 @@
 #include <eosio/chain/apply_context.hpp>
 #include <softfloat_types.h>
 
-//eos-vm includes
+//leopays-vm includes
 #include <eosio/vm/backend.hpp>
 
-// eosio specific specializations
+// LeoPays specific specializations
 namespace eosio { namespace vm {
 
    template<>
@@ -107,7 +107,7 @@ namespace eosio { namespace vm {
       }
    };
 
-}} // ns eosio::vm
+}}
 
 namespace eosio { namespace chain { namespace webassembly { namespace eos_vm_runtime {
 
@@ -135,7 +135,7 @@ class eos_vm_runtime : public eosio::chain::wasm_runtime_interface {
    friend class eos_vm_instantiated_module;
 };
 
-} } } }// eosio::chain::webassembly::wabt_runtime
+} } } }
 
 #define __EOS_VM_INTRINSIC_NAME(LBL, SUF) LBL##SUF
 #define _EOS_VM_INTRINSIC_NAME(LBL, SUF) __INTRINSIC_NAME(LBL, SUF)

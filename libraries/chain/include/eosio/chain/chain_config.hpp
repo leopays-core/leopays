@@ -101,7 +101,7 @@ struct chain_config {
 
 };
 
-} } // namespace eosio::chain
+} }
 
 FC_REFLECT(eosio::chain::chain_config,
            (max_block_net_usage)(target_block_net_usage_pct)

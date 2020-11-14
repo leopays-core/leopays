@@ -704,7 +704,7 @@ private:
 template <class Op_Types>
 const std::vector<instr*>* EOSIO_OperatorDecoderStream<Op_Types>::_cached_ops;
 
-}}} // namespace eosio, chain, wasm_ops
+}}}
 
 FC_REFLECT_TEMPLATE( (typename T), eosio::chain::wasm_ops::block< T >, (code)(rt) )
 FC_REFLECT( eosio::chain::wasm_ops::memarg, (a)(o) )

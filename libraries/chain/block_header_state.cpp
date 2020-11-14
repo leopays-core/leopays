@@ -472,4 +472,4 @@ namespace eosio { namespace chain {
    }
 
 
-} } /// namespace eosio::chain
+} }

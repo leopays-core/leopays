@@ -847,4 +847,4 @@ namespace eosio { namespace chain { namespace wasm_injections {
          standard_module_injectors _module_injectors;
    };
 
-}}} // namespace wasm_constraints, chain, eosio
+}}}

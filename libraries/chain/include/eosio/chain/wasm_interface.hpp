@@ -102,7 +102,7 @@ namespace eosio { namespace chain {
          //call before dtor to skip what can be minutes of dtor overhead with some runtimes; can cause leaks
          void indicate_shutting_down();
 
-         //validates code -- does a WASM validation pass and checks the wasm against EOSIO specific constraints
+         //validates code -- does a WASM validation pass and checks the wasm against LeoPays specific constraints
          static void validate(const controller& control, const bytes& code);
 
          //indicate that a particular code probably won't be used after given block_num
@@ -122,7 +122,7 @@ namespace eosio { namespace chain {
          friend class eosio::chain::webassembly::common::intrinsics_accessor;
    };
 
-} } // eosio::chain
+} }
 
 namespace eosio{ namespace chain {
    std::istream& operator>>(std::istream& in, wasm_interface::vm_type& runtime);

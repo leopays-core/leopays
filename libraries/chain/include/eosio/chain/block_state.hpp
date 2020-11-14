@@ -67,6 +67,6 @@ namespace eosio { namespace chain {
    using block_state_ptr = std::shared_ptr<block_state>;
    using branch_type = std::vector<block_state_ptr>;
 
-} } /// namespace eosio::chain
+} }
 
 FC_REFLECT_DERIVED( eosio::chain::block_state, (eosio::chain::block_header_state), (block)(validated) )

@@ -101,7 +101,7 @@ struct extended_asset  {
 bool  operator <  (const asset& a, const asset& b);
 bool  operator <= (const asset& a, const asset& b);
 
-}} // namespace eosio::chain
+}}
 
 namespace fc {
 inline void to_variant(const eosio::chain::asset& var, fc::variant& vo) { vo = var.to_string(); }

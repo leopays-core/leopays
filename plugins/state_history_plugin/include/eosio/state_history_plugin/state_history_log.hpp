@@ -292,6 +292,6 @@ class state_history_log {
    }
 }; // state_history_log
 
-} // namespace eosio
+}
 
 FC_REFLECT(eosio::state_history_log_header, (magic)(block_id)(payload_size))

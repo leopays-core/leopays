@@ -33,7 +33,7 @@ namespace eosio { namespace chain {
       >
    >;
 
-} } // eosio::chain
+} }
 
 CHAINBASE_SET_INDEX_TYPE(eosio::chain::code_object, eosio::chain::code_index)
 

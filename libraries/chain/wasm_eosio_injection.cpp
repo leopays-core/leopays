@@ -49,4 +49,4 @@ std::queue<std::vector<size_t>>      checktime_block_type::orderings;
 std::queue<std::map<size_t, size_t>> checktime_block_type::bcnt_tables;
 size_t  checktime_function_end::fcnt = 0;
 
-}}} // namespace eosio, chain, injectors
+}}}

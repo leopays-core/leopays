@@ -282,7 +282,7 @@ namespace config {
 
 } // namespace config
 
-} }  // namespace eosio::chain
+} }
 
 CHAINBASE_SET_INDEX_TYPE(eosio::chain::table_id_object, eosio::chain::table_id_multi_index)
 CHAINBASE_SET_INDEX_TYPE(eosio::chain::key_value_object, eosio::chain::key_value_index)

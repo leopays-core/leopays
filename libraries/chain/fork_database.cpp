@@ -491,4 +491,4 @@ namespace eosio { namespace chain {
       return block_state_ptr();
    }
 
-} } /// eosio::chain
+} }

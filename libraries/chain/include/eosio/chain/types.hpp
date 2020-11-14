@@ -194,11 +194,11 @@ namespace eosio { namespace chain {
    };
 
    /**
-    *  Important notes on using chainbase objects in EOSIO code:
+    *  Important notes on using chainbase objects in LeoPays code:
     *
     *  There are several constraints that need to be followed when using chainbase objects.
     *  Some of these constraints are due to the requirements imposed by the chainbase library,
-    *  others are due to requirements to ensure determinism in the EOSIO chain library.
+    *  others are due to requirements to ensure determinism in the LeoPays chain library.
     *
     *  Before listing the constraints, the "restricted field set" must be defined.
     *
@@ -393,6 +393,6 @@ namespace eosio { namespace chain {
    template<class... Ts> struct overloaded : Ts... { using Ts::operator()...; };
    template<class... Ts> overloaded(Ts...) -> overloaded<Ts...>;
 
-} }  // eosio::chain
+} }
 
 FC_REFLECT_EMPTY( eosio::chain::void_t )

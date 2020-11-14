@@ -68,7 +68,7 @@ Also allows a contract to send a deferred transaction in a manner that enables t
 /*
 Builtin protocol feature: FIX_LINKAUTH_RESTRICTION
 
-Removes the restriction on eosio::linkauth for non-native actions named one of the five special action names:
+Removes the restriction on lpc::linkauth for non-native actions named one of the five special action names:
 updateauth, deleteauth, linkauth, unlinkauth, or canceldelay.
 */
             {}
@@ -115,7 +115,7 @@ Adds CPU and network bandwidth usage to only the first authorizer of a transacti
 /*
 Builtin protocol feature: FORWARD_SETCODE
 
-Forward eosio::setcode actions to the WebAssembly code deployed on the eosio account.
+Forward lpc::setcode actions to the WebAssembly code deployed on the lpc account.
 */
             {}
          } )
@@ -698,4 +698,4 @@ may use a new `set_proposed_producers_ex` intrinsic to access extended features.
       }
    }
 
-} }  // eosio::chain
+} }

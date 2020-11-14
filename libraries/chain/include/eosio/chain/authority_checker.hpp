@@ -274,4 +274,4 @@ namespace detail {
                                                             checktime );
    }
 
-} } // namespace eosio::chain
+} }

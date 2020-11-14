@@ -13,5 +13,5 @@ namespace eosio {
          MAKE_READ_SNAPSHOT(snap_v2)
          MAKE_READ_SNAPSHOT(snap_v2_prod_sched)
       };
-   } /// eosio::testing
-}  /// eosio
+   }
+}

@@ -95,4 +95,4 @@ namespace eosio { namespace chain {
          unique_ptr<fork_database_impl> my;
    };
 
-} } /// eosio::chain
+} }

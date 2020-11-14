@@ -132,7 +132,7 @@ class state_history_plugin : public plugin<state_history_plugin> {
    state_history_ptr my;
 };
 
-} // namespace eosio
+}
 
 // clang-format off
 FC_REFLECT(eosio::table_delta, (struct_version)(name)(rows));

@@ -87,4 +87,4 @@ class transaction_metadata {
 
 };
 
-} } // eosio::chain
+} }

@@ -37,6 +37,10 @@ public:
       std::vector<account_name> accounts;
    };
 
+   struct producerslist_params {
+      std::vector<account_name> accounts;
+   };
+
    struct integrity_hash_information {
       chain::block_id_type head_block_id;
       chain::digest_type   integrity_hash;
@@ -96,6 +100,7 @@ public:
    void add_greylist_accounts(const greylist_params& params);
    void remove_greylist_accounts(const greylist_params& params);
    greylist_params get_greylist() const;
+   producerslist_params get_node_producers() const;
 
    whitelist_blacklist get_whitelist_blacklist() const;
    void set_whitelist_blacklist(const whitelist_blacklist& params);
@@ -116,10 +121,11 @@ public:
    std::shared_ptr<class producer_plugin_impl> my;
 };
 
-} //eosio
+}
 
 FC_REFLECT(eosio::producer_plugin::runtime_options, (max_transaction_time)(max_irreversible_block_age)(produce_time_offset_us)(last_block_time_offset_us)(max_scheduled_transaction_time_per_block_ms)(subjective_cpu_leeway_us)(incoming_defer_ratio)(greylist_limit));
 FC_REFLECT(eosio::producer_plugin::greylist_params, (accounts));
+FC_REFLECT(eosio::producer_plugin::producerslist_params, (accounts));
 FC_REFLECT(eosio::producer_plugin::whitelist_blacklist, (actor_whitelist)(actor_blacklist)(contract_whitelist)(contract_blacklist)(action_blacklist)(key_blacklist) )
 FC_REFLECT(eosio::producer_plugin::integrity_hash_information, (head_block_id)(integrity_hash))
 FC_REFLECT(eosio::producer_plugin::snapshot_information, (head_block_id)(snapshot_name))

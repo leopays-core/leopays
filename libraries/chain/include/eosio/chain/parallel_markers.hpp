@@ -35,5 +35,5 @@ DataRange filter_data_by_marker(DataRange data, MarkerRange markers, const Marke
    return {range.begin(), range.end()};
 }
 
-}} // namespace eosio::chain
+}}
 

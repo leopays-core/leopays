@@ -44,6 +44,6 @@ namespace eosio { namespace chain {
       return task->get_future();
    }
 
-} } // eosio::chain
+} }
 
 

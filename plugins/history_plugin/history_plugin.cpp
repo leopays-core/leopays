@@ -73,7 +73,7 @@ namespace eosio {
       >
    >;
 
-} /// namespace eosio
+}
 
 CHAINBASE_SET_INDEX_TYPE(eosio::account_history_object, eosio::account_history_index)
 CHAINBASE_SET_INDEX_TYPE(eosio::action_history_object, eosio::action_history_index)
@@ -314,7 +314,7 @@ namespace eosio {
             for( auto& s : fo ) {
                if( s == "*" || s == "\"*\"" ) {
                   my->bypass_filter = true;
-                  wlog( "--filter-on * enabled. This can fill shared_mem, causing nodeos to stop." );
+                  wlog( "--filter-on * enabled. This can fill shared_mem, causing leopays-node to stop." );
                   break;
                }
                std::vector<std::string> v;
@@ -578,4 +578,4 @@ namespace eosio {
 
 
 
-} /// namespace eosio
+}

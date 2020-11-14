@@ -127,7 +127,7 @@ vector<type_def> common_type_defs();
 
 extern unsigned char eosio_abi_bin[2132];
 
-} } /// namespace eosio::chain
+} }
 
 namespace fc {
 

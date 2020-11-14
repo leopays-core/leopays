@@ -744,4 +744,4 @@ struct intrinsic_function_invoker_wrapper<Ret (Cls::*)(Params...) const volatile
       eosio::chain::webassembly::wabt_runtime::intrinsic_function_invoker_wrapper<SIG>::type::fn<&CLS::METHOD>()\
    );\
 
-} } } }// eosio::chain::webassembly::wabt_runtime
+} } } }

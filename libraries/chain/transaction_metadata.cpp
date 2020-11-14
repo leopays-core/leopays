@@ -22,4 +22,4 @@ recover_keys_future transaction_metadata::start_recover_keys( packed_transaction
    );
 }
 
-} } // eosio::chain
+} }

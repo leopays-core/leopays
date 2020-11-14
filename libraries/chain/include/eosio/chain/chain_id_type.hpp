@@ -53,10 +53,10 @@ namespace chain {
          friend struct snapshot_global_property_object;
    };
 
-} }  // namespace eosio::chain
+} }
 
 namespace fc {
   class variant;
   void to_variant(const eosio::chain::chain_id_type& cid, fc::variant& v);
   void from_variant(const fc::variant& v, eosio::chain::chain_id_type& cid);
-} // fc
+}

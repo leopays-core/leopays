@@ -1231,7 +1231,7 @@ namespace eosio { namespace testing {
 
    const std::string mock::webauthn_private_key::_origin = "mock.webauthn.invalid";
    const sha256 mock::webauthn_private_key::_origin_hash = fc::sha256::hash(mock::webauthn_private_key::_origin);
-} }  /// eosio::testing
+} }
 
 std::ostream& operator<<( std::ostream& osm, const fc::variant& v ) {
    //fc::json::to_stream( osm, v );

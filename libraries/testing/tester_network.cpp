@@ -41,4 +41,4 @@ namespace eosio { namespace testing {
     //  }
    }
 
-} } /// eosio::testing
+} }

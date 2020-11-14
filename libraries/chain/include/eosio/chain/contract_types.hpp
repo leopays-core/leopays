@@ -152,7 +152,7 @@ struct onerror {
    }
 };
 
-} } /// namespace eosio::chain
+} }
 
 FC_REFLECT( eosio::chain::newaccount                       , (creator)(name)(owner)(active) )
 FC_REFLECT( eosio::chain::setcode                          , (account)(vmtype)(vmversion)(code) )

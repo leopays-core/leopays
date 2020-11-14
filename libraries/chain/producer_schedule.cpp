@@ -20,4 +20,4 @@ fc::variant producer_authority::get_abi_variant() const {
             ("authority", std::move(authority_variant));
 }
 
-} } /// eosio::chain
+} }

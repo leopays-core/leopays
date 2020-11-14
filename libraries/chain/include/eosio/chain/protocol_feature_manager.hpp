@@ -366,7 +366,7 @@ protected:
    bool                                   _initialized = false;
 };
 
-} } // namespace eosio::chain
+} }
 
 FC_REFLECT(eosio::chain::protocol_feature_subjective_restrictions,
                (earliest_allowed_activation_time)(preactivation_required)(enabled))

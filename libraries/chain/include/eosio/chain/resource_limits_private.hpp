@@ -258,7 +258,7 @@ namespace eosio { namespace chain { namespace resource_limits {
       >
    >;
 
-} } } /// eosio::chain::resource_limits
+} } }
 
 CHAINBASE_SET_INDEX_TYPE(eosio::chain::resource_limits::resource_limits_object,        eosio::chain::resource_limits::resource_limits_index)
 CHAINBASE_SET_INDEX_TYPE(eosio::chain::resource_limits::resource_usage_object,         eosio::chain::resource_limits::resource_usage_index)

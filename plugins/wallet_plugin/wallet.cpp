@@ -258,7 +258,7 @@ public:
    const string _default_key_type = "K1";
 };
 
-} } } // eosio::wallet::detail
+} } }
 
 
 
@@ -414,5 +414,5 @@ void soft_wallet::set_wallet_filename(string wallet_filename)
    my->_wallet_filename = wallet_filename;
 }
 
-} } // eosio::wallet
+} }
 

@@ -101,4 +101,4 @@ namespace eosio { namespace chain {
    ,_cached_trxs( std::move(trx_metas) )
    {}
 
-} } /// eosio::chain
+} }

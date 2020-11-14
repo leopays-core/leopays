@@ -39,7 +39,7 @@ struct protocol_feature_activation_set {
 };
 
 
-} } // namespace eosio::chain
+} }
 
 FC_REFLECT(eosio::chain::protocol_feature_activation,     (protocol_features))
 FC_REFLECT(eosio::chain::protocol_feature_activation_set, (protocol_features))

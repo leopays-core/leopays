@@ -145,7 +145,7 @@ namespace eosio {
                                       signed_block,         // which = 7
                                       packed_transaction>;  // which = 8
 
-} // namespace eosio
+}
 
 FC_REFLECT( eosio::select_ids<fc::sha256>, (mode)(pending)(ids) )
 FC_REFLECT( eosio::chain_size_message,

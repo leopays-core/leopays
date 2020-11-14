@@ -351,4 +351,4 @@ namespace eosio { namespace chain { namespace wasm_validations {
          static standard_module_constraints_validators _module_validators;
    };
 
-}}} // namespace wasm_constraints, chain, eosio
+}}}

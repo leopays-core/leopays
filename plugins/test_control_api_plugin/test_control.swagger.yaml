@@ -6,9 +6,9 @@ info:
     name: MIT
     url: https://opensource.org/licenses/MIT
   contact:
-    url: https://eos.io
+    url: https://leopays.com
 tags:
-  - name: eosio
+  - name: lpc
 servers:
   - url: '{protocol}://{host}:{port}/v1/'
     variables:
